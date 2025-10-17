@@ -1,0 +1,2841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Development Life Cycle Models: Waterfall & Beyond</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            margin: 30px 0;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #4a5568;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .section h3 {
+            color: #5a67d8;
+            margin: 25px 0 15px 0;
+            font-size: 1.4em;
+        }
+
+        .section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #2d3748;
+        }
+
+        .analogy-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .analogy-box h4 {
+            color: #c53030;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .concept-box {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .concept-box h4 {
+            color: #434190;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .key-point {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #38a169;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #e67e22;
+        }
+
+        .interactive-demo {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #e9ecef;
+        }
+
+        .model-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .model-card h4 {
+            color: #5a67d8;
+            margin-bottom: 10px;
+        }
+
+        .waterfall-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+        }
+
+        .phase-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 40px;
+            margin: 10px 0;
+            border-radius: 10px;
+            width: 80%;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .phase-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .phase-box::after {
+            content: '▼';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            color: #667eea;
+        }
+
+        .phase-box:last-child::after {
+            display: none;
+        }
+
+        .phase-details {
+            display: none;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .phase-details.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .comparison-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .comparison-table tr:hover {
+            background: #e3f2fd;
+        }
+
+        .pros-cons-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pros-box {
+            background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #38a169;
+        }
+
+        .cons-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #e67e22;
+        }
+
+        .pros-box h4,
+        .cons-box h4 {
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .pros-box ul,
+        .cons-box ul {
+            list-style-position: inside;
+            line-height: 1.8;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: inline-block;
+            margin: 0 10px;
+        }
+
+        .toggle-switch.active {
+            background: #4caf50;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(30px);
+        }
+
+        .model-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .model-btn {
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .model-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .model-btn.active {
+            background: linear-gradient(135deg, #38a169 0%, #2f855a 100%);
+        }
+
+        .model-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .model-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .quiz-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+
+        .quiz-question h4 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .quiz-options {
+            margin: 15px 0;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 12px;
+            margin: 8px 0;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: #edf2f7;
+            border-color: #667eea;
+        }
+
+        .quiz-option.selected {
+            background: #bee3f8;
+            border-color: #3182ce;
+        }
+
+        .quiz-option.correct {
+            background: #c6f6d5;
+            border-color: #38a169;
+        }
+
+        .quiz-option.incorrect {
+            background: #fed7d7;
+            border-color: #e53e3e;
+        }
+
+        .submit-btn {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .glossary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .glossary-term {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .glossary-term strong {
+            color: #5a67d8;
+            font-size: 1.1em;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .spiral-diagram {
+            width: 100%;
+            max-width: 600px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .spiral-diagram svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .requirements-tool {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .requirement-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .requirement-item:hover {
+            background: #e2e8f0;
+        }
+
+        .checkbox {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .case-study {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #e67e22;
+        }
+
+        .case-study h4 {
+            color: #c53030;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .case-study-scenario {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .pros-cons-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .phase-box {
+                width: 95%;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 Software Development Life Cycle Models</h1>
+            <p>Master the Waterfall Model and Other SDLC Methodologies</p>
+            <p style="font-size: 0.9em; margin-top: 10px; color: #718096;">A Complete Guide for Computer Science Students</p>
+        </div>
+
+        <!-- Introduction Section -->
+        <div class="section">
+            <h2>📚 Introduction: Understanding SDLC Models</h2>
+            <p>The Software Development Life Cycle (SDLC) is like a recipe for creating software. Just as there are many ways to bake a cake (from scratch, using a mix, or modifying a recipe), there are many different approaches to developing software. Each SDLC model provides a structured framework for planning, creating, testing, and deploying software systems.</p>
+
+            <div class="analogy-box">
+                <h4>🎯 Real-World Analogy</h4>
+                <p>Think of SDLC models like different strategies for completing a major school project. Some students plan everything in detail before starting (Waterfall), others create a rough draft and keep improving it (Evolutionary), and some work in small chunks with frequent check-ins (Agile). Each approach has its strengths depending on the project type and requirements.</p>
+            </div>
+
+            <p>There are many models and variants of the SDLC frameworks or methodologies. Understanding when to use each model is crucial for successful software development. Let's explore the major SDLC models in detail.</p>
+        </div>
+
+        <!-- Generic Life Cycle Models Overview -->
+        <div class="section">
+            <h2>🌟 Generic Life Cycle Models: The Big Picture</h2>
+            <p>Before diving deep into the Waterfall model, let's understand the landscape of SDLC methodologies. Each model was designed to address specific challenges in software development.</p>
+
+            <div class="model-selector">
+                <button class="model-btn active" onclick="showModel('waterfall-intro')">Waterfall</button>
+                <button class="model-btn" onclick="showModel('fountain-intro')">Fountain</button>
+                <button class="model-btn" onclick="showModel('spiral-intro')">Spiral</button>
+                <button class="model-btn" onclick="showModel('rapid-intro')">Rapid Prototyping</button>
+                <button class="model-btn" onclick="showModel('agile-intro')">Agile</button>
+                <button class="model-btn" onclick="showModel('incremental-intro')">Incremental</button>
+            </div>
+
+            <div id="waterfall-intro" class="model-content active">
+                <div class="model-card">
+                    <h4>🌊 Waterfall Model</h4>
+                    <p><strong>Focus:</strong> Complete and correct planning to guide large projects and risks into successful and predictable results.</p>
+                    <p><strong>Best For:</strong> Projects with well-defined requirements that are unlikely to change, such as developing systems for regulated industries or replacing existing manual systems.</p>
+                    <p><strong>Key Characteristic:</strong> Sequential phases that flow downward like a waterfall—each phase must be completed before the next begins.</p>
+                </div>
+            </div>
+
+            <div id="fountain-intro" class="model-content">
+                <div class="model-card">
+                    <h4>⛲ Fountain Model</h4>
+                    <p><strong>Focus:</strong> A highly iterative approach that is well-suited to object-oriented software development. The fountain model allows for the fact that there is considerable overlap of activities throughout the development cycle.</p>
+                    <p><strong>Best For:</strong> Object-oriented projects where requirements evolve and phases naturally overlap.</p>
+                    <p><strong>Key Characteristic:</strong> Like water flowing in a fountain, development activities cycle back and forth, allowing for continuous refinement.</p>
+                </div>
+            </div>
+
+            <div id="spiral-intro" class="model-content">
+                <div class="model-card">
+                    <h4>🌀 Spiral Model</h4>
+                    <p><strong>Focus:</strong> Based on the unique risk patterns of a given project, the spiral model guides a team to adopt elements of one or more process models such as incremental, waterfall, or evolutionary prototyping.</p>
+                    <p><strong>Best For:</strong> Large, complex, high-risk projects where risk management is critical.</p>
+                    <p><strong>Key Characteristic:</strong> Combines iterative development with systematic risk analysis in each cycle (quadrant).</p>
+                </div>
+            </div>
+
+            <div id="rapid-intro" class="model-content">
+                <div class="model-card">
+                    <h4>⚡ Rapid Prototyping</h4>
+                    <p><strong>Focus:</strong> When a working model of software with some limited functionality is created for user interface. Prototyping is used to allow the users to evaluate developer proposals and try them out before implementation.</p>
+                    <p><strong>Best For:</strong> Projects where user interface and user experience are critical, or when requirements are unclear.</p>
+                    <p><strong>Key Characteristic:</strong> Quick creation of working models to gather user feedback before full development.</p>
+                </div>
+            </div>
+
+            <div id="agile-intro" class="model-content">
+                <div class="model-card">
+                    <h4>🏃 Agile Model</h4>
+                    <p><strong>Focus:</strong> An iterative approach is taken and working software is built and delivered after each iteration. Each build is incremental in terms of features; the final build holds all the features required by the customer.</p>
+                    <p><strong>Best For:</strong> Projects with changing requirements and need for frequent customer feedback.</p>
+                    <p><strong>Key Characteristic:</strong> Short development cycles (sprints) with working software delivered frequently.</p>
+                </div>
+            </div>
+
+            <div id="incremental-intro" class="model-content">
+                <div class="model-card">
+                    <h4>📈 Incremental Model</h4>
+                    <p><strong>Focus:</strong> This model focuses on limited project scope and expanding or improving products by multiple iterations.</p>
+                    <p><strong>Best For:</strong> Projects that can be divided into smaller modules or when early delivery of core functionality is needed.</p>
+                    <p><strong>Key Characteristic:</strong> Software is developed and delivered in small, functional increments.</p>
+                </div>
+            </div>
+
+            <div class="concept-box" style="margin-top: 30px;">
+                <h4>💡 Key Insight</h4>
+                <p>There are many models of the software development life cycle including waterfall approach, evolutionary development including prototyping, fountain approach, formal transformation, and reuse-oriented approach according to your syllabus. The choice of model depends on project requirements, risk tolerance, team experience, and customer involvement.</p>
+            </div>
+        </div>
+
+        <!-- Waterfall Model - Main Section -->
+        <div class="section">
+            <h2>🌊 The Waterfall Model: Deep Dive</h2>
+            <p>The oldest and most linear life cycle model is the Waterfall model, which states that the phases are organized in a sequential unbreakable order. A project begins with feasibility analysis. Upon successful demonstration of the feasibility analysis, the requirements analysis phase begins.</p>
+
+            <div class="analogy-box">
+                <h4>🏗️ Building a House Analogy</h4>
+                <p>Imagine building a house. You can't install the roof before building the walls, and you can't build the walls before laying the foundation. Similarly, in the Waterfall model, you must complete requirements analysis before design, design before coding, and coding before testing. Each phase builds upon the previous one, and going back is costly and difficult—just like trying to change the foundation after the walls are up!</p>
+            </div>
+
+            <h3>The Five Phases of Waterfall</h3>
+            <p>The figure below demonstrates the steps involved in the waterfall life cycle model. The design starts after the requirements analysis is done and coding begins after the design is done. Once the programming is completed, the code is integrated and testing is done. After this the regular operation and maintenance of the system takes place.</p>
+
+            <div class="waterfall-diagram">
+                <div class="phase-box" onclick="togglePhase('phase1')">
+                    1. Requirement Analysis & Definition
+                </div>
+                <div class="phase-details" id="phase1">
+                    <p><strong>What Happens:</strong> The developer analyzes user requirements and performs an investigation into the requirements, which produces developer version of requirements. Since users are often unable to describe what they need with precision, the developer finally gets the users to accept the proposal they can now begin.</p>
+                    <p><strong>Deliverable:</strong> Requirements document that both users and developers agree upon.</p>
+                    <p><strong>Real-World Example:</strong> Like writing a detailed shopping list before going to the grocery store, specifying exactly what you need, how much, and why.</p>
+                </div>
+
+                <div class="phase-box" onclick="togglePhase('phase2')">
+                    2. System & Software Design
+                </div>
+                <div class="phase-details" id="phase2">
+                    <p><strong>What Happens:</strong> This phase focuses on high level design: what programs are needed and how they will interact with each other. It also includes low level design (how the modules will work), interface design (what the interface will look like), and data design (what data is required). Hence the overall system architecture is defined.</p>
+                    <p><strong>Deliverable:</strong> System architecture document, interface designs, and data structure specifications.</p>
+                    <p><strong>Real-World Example:</strong> Like creating a detailed blueprint for your house, showing where each room goes, how they connect, and what materials you'll need.</p>
+                </div>
+
+                <div class="phase-box" onclick="togglePhase('phase3')">
+                    3. Implementation & Unit Testing
+                </div>
+                <div class="phase-details" id="phase3">
+                    <p><strong>What Happens:</strong> In this phase, designs are translated into code. Programs are written using a programming language or code generators.</p>
+                    <p><strong>Deliverable:</strong> Working code modules that have been individually tested.</p>
+                    <p><strong>Real-World Example:</strong> Like actually building the house according to the blueprint, one room at a time, and checking each room individually.</p>
+                </div>
+
+                <div class="phase-box" onclick="togglePhase('phase4')">
+                    4. Integration & System Testing
+                </div>
+                <div class="phase-details" id="phase4">
+                    <p><strong>What Happens:</strong> In this phase, the system is tested: each module is tested separately and in detail, then the system's modules work, the system works as intended with the expected data and that it does what the user requires.</p>
+                    <p><strong>Deliverable:</strong> Fully tested and verified system ready for deployment.</p>
+                    <p><strong>Real-World Example:</strong> Like checking if all the rooms work together properly—does the plumbing connect correctly? Does electricity flow to all rooms? Does everything meet building codes?</p>
+                </div>
+
+                <div class="phase-box" onclick="togglePhase('phase5')">
+                    5. Operation & Maintenance
+                </div>
+                <div class="phase-details" id="phase5">
+                    <p><strong>What Happens:</strong> In this phase, the system is maintained since the software will undergo change once delivered to the customers. These changes may stem from user input values into the system.</p>
+                    <p><strong>Deliverable:</strong> Updated system with bug fixes and enhancements based on user feedback.</p>
+                    <p><strong>Real-World Example:</strong> Like maintaining your house after moving in—fixing leaks, repainting walls, upgrading appliances based on your needs.</p>
+                </div>
+            </div>
+
+            <div class="key-point">
+                <h4>🔑 Key Concept: Deliverables and Sequential Flow</h4>
+                <p>The waterfall model is the first to clearly identify the end of a phase and beginning of the others. Some documentation mechanism has to be employed at the end of each phase. This is usually done by some verification and validation. Validation means confirming the output of a phase is complete, with its input (which is the output of the previous phase) and that the output of the phase is consistent with overall requirements.</p>
+                <p><strong>Important:</strong> In the waterfall approach, the result of each phase is called a deliverable or end product which flows sequentially into the next phase. For the coding phase, the output is the code.</p>
+            </div>
+        </div>
+
+        <!-- Advantages of Waterfall -->
+        <div class="section">
+            <h2>✅ Advantages of the Waterfall Model</h2>
+            
+            <div class="pros-cons-grid">
+                <div class="pros-box">
+                    <h4>Strengths</h4>
+                    <ul>
+                        <li><strong>Easy to explain to the user:</strong> The linear nature makes it simple to communicate the process to stakeholders.</li>
+                        <li><strong>Simple and easy to use:</strong> Straightforward methodology that's easy to understand and implement.</li>
+                        <li><strong>Stages and activities are well-defined:</strong> Clear milestones and deliverables at each phase.</li>
+                        <li><strong>Verification at each stage ensures early detection of errors or misunderstanding:</strong> Each phase is processed and completed one at a time, allowing for thorough review.</li>
+                        <li><strong>Easy to manage:</strong> Due to the rigidity of the model, each phase has specific deliverables and a review process.</li>
+                        <li><strong>Works well for smaller projects:</strong> Where requirements are very well understood and unlikely to change.</li>
+                        <li><strong>Easy to understand, easy to use:</strong> The sequential nature aligns with how many people naturally think about processes.</li>
+                    </ul>
+                </div>
+
+                <div style="grid-column: 1 / -1;">
+                    <div class="analogy-box">
+                        <h4>📝 Student Project Analogy</h4>
+                        <p>Think of writing a research paper with clear steps: (1) Choose topic, (2) Research and outline, (3) Write draft, (4) Edit and revise, (5) Submit final version. This linear approach works great when you know exactly what you're writing about and the requirements won't change. However, if your teacher suddenly changes the topic requirements halfway through, you'd have to start over—that's the main limitation of Waterfall!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Disadvantages and Limitations -->
+        <div class="section">
+            <h2>⚠️ Disadvantages and Limitations of Waterfall</h2>
+
+            <div class="pros-cons-grid">
+                <div class="cons-box">
+                    <h4>Disadvantages</h4>
+                    <ul>
+                        <li><strong>Adjusting scope during the life cycle can kill a project:</strong> Changes are difficult and expensive to implement once a phase is completed.</li>
+                        <li><strong>No working software is produced until late during the life cycle:</strong> Users don't see a working product until near the end.</li>
+                        <li><strong>High amounts of risk and uncertainty:</strong> Problems may not be discovered until the testing phase.</li>
+                        <li><strong>Very rigid:</strong> Difficult to accommodate changes in requirements.</li>
+                        <li><strong>Does not reflect the iterative nature of software development:</strong> Real software development often requires going back and forth between phases.</li>
+                    </ul>
+                </div>
+
+                <div class="cons-box">
+                    <h4>Limitations</h4>
+                    <ul>
+                        <li><strong>Assumes requirements will not change:</strong> This is possible for systems designed to automate an existing manual system. The waterfall is not applicable for the development of new systems, where there may be hidden or unknown requirements.</li>
+                        <li><strong>All requirements must be completely specified before development begins:</strong> The waterfall model stipulates that all requirements must be completely specified before the development can begin.</li>
+                        <li><strong>Not suitable for complex projects:</strong> Where requirements are likely to evolve or are not fully understood at the start.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚡ When NOT to Use Waterfall</h4>
+                <p>The waterfall model assumes that the requirements will not change. This is possible for systems designed to automate an existing manual system. The waterfall is not applicable for the development of new systems, where there may be hidden or unknown requirements. If you're developing something innovative or experimental, consider using Spiral, Agile, or Evolutionary models instead.</p>
+            </div>
+        </div>
+
+
+
+
+        <!-- Rapid Prototyping -->
+        <div class="section">
+            <h2>⚡ Rapid Prototyping: Build Fast, Learn Fast</h2>
+            <p>Rapid Prototyping is when a working model of software with some limited functionality is created for user interface. Prototyping is used to allow the users to evaluate developer proposals and try them out before implementation.</p>
+
+            <div class="analogy-box">
+                <h4>🎬 Movie Trailer Analogy</h4>
+                <p>Think of rapid prototyping like creating a movie trailer before making the full movie. The trailer gives viewers a taste of what to expect, and based on their reactions, filmmakers can adjust the final product. Similarly, a prototype shows users what the software will look like and how it will work, allowing for feedback before investing in full development.</p>
+            </div>
+
+            <h3>The Four Phases of Rapid Prototyping</h3>
+            
+            <div class="model-card">
+                <h4>Phase 1: Requirements Planning Phase</h4>
+                <p>A workshop utilizing structured discussion of business problems.</p>
+            </div>
+
+            <div class="model-card">
+                <h4>Phase 2: User Description Phase</h4>
+                <p>Automated tools capture information from users.</p>
+            </div>
+
+            <div class="model-card">
+                <h4>Phase 3: Construction Phase</h4>
+                <p>Productivity tools, such as code generators, screen generators, etc. inside a toolbox are used to build the prototype.</p>
+            </div>
+
+            <div class="model-card">
+                <h4>Phase 4: Cutover Phase</h4>
+                <p>Installation of the system, user acceptance testing, and user training.</p>
+            </div>
+
+            <h3>Strengths and Weaknesses</h3>
+            
+            <div class="pros-cons-grid">
+                <div class="pros-box">
+                    <h4>Strengths</h4>
+                    <ul>
+                        <li><strong>Reduced cycle time and improved productivity:</strong> With fewer people means lower costs.</li>
+                        <li><strong>Time box approach mitigates cost and schedule risk:</strong> Development is controlled within set time limits.</li>
+                        <li><strong>Customer involved throughout:</strong> Minimizes risk of not achieving customer satisfaction and business needs.</li>
+                        <li><strong>Uses modeling concepts:</strong> Information about business, data, and processes. The software object is completed in a shorter period of time and significantly cheaper. With rapid prototyping, you can have an idea about how the actual software will function as the requirements of the entire system.</li>
+                    </ul>
+                </div>
+
+                <div class="cons-box">
+                    <h4>Weaknesses</h4>
+                    <ul>
+                        <li><strong>Accelerated development process must give quick responses to the user:</strong> Requires fast turnaround times.</li>
+                        <li><strong>Risk of never achieving closure:</strong> Continuous changes can prevent project completion.</li>
+                        <li><strong>Requires a system that can be modularized:</strong> Not all systems can be easily broken into modules.</li>
+                        <li><strong>Developers and customers must be committed to rapid-fire activities:</strong> Requires high engagement from all parties in an abbreviated time frame.</li>
+                        <li><strong>The word "rapid" is relative:</strong> Construction of a model with contemporary methods can take from several hours to several days.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>🎮 Interactive Prototype Simulator</h4>
+                <p>Toggle the switches to see how rapid prototyping adapts to user feedback:</p>
+                <div style="margin: 20px 0;">
+                    <div class="requirement-item">
+                        <input type="checkbox" class="checkbox" id="proto1" onchange="updatePrototype()">
+                        <label for="proto1">User wants dark mode interface</label>
+                    </div>
+                    <div class="requirement-item">
+                        <input type="checkbox" class="checkbox" id="proto2" onchange="updatePrototype()">
+                        <label for="proto2">User wants simplified navigation</label>
+                    </div>
+                    <div class="requirement-item">
+                        <input type="checkbox" class="checkbox" id="proto3" onchange="updatePrototype()">
+                        <label for="proto3">User wants mobile-first design</label>
+                    </div>
+                </div>
+                <div id="prototype-result" style="padding: 15px; background: white; border-radius: 8px; margin-top: 15px;">
+                    <strong>Prototype Status:</strong> <span id="proto-status">No features selected - basic prototype</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evolutionary Development -->
+        <div class="section">
+            <h2>🔄 Evolutionary Development: Grow Your Software</h2>
+            <p>Software development is very interactive as user input and constant feedback play a critical role in the development before critical junctures in the development are reached. Evolutionary development is effective in the development of new systems, instead of creating comprehensive artifact, such as a requirements specification, that you review and accept in one go, you instead evolve the critical development artifacts over a period of time in an iterative manner.</p>
+
+            <div class="analogy-box">
+                <h4>📝 Essay Writing Analogy</h4>
+                <p>Think about writing an important essay. You don't write it perfectly in one go. Instead, you write a rough draft, get feedback from friends or teachers, revise it, get more feedback, revise again, and keep improving until it's excellent. Evolutionary development works the same way—you create a basic version, get user feedback, improve it, and repeat until the software meets all needs.</p>
+            </div>
+
+            <p>The evolutionary development model divides the development cycle into smaller, incremental models. In each model, the users provide feedback on the product. The planning stage of the next model is dependent on the feedback from the previous model. Hence, the development team responds, often by changing the product, plans or process.</p>
+
+            <p>The evolutionary development approach aims to develop a mature system through a series of prototype iterations.</p>
+
+            <h3>Strengths and Weaknesses</h3>
+
+            <div class="pros-cons-grid">
+                <div class="pros-box">
+                    <h4>Strengths</h4>
+                    <ul>
+                        <li><strong>Constant updates and changes:</strong> Due to the constant updates and changes that become available through the user input, the programs will mostly fit the desired need.</li>
+                        <li><strong>Flexibility:</strong> Allows for changes and improvements throughout the development process.</li>
+                        <li><strong>User involvement:</strong> Continuous user feedback ensures the final product meets actual needs.</li>
+                    </ul>
+                </div>
+
+                <div class="cons-box">
+                    <h4>Weaknesses</h4>
+                    <ul>
+                        <li><strong>Extensive development process:</strong> The development process may be extensive due to the constant feedback.</li>
+                        <li><strong>Gap in functionalities:</strong> There can be a gap in the type of functionalities needed, between management, developer and end user.</li>
+                        <li><strong>Unclear endpoint:</strong> It may be difficult to determine when the system is "complete."</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>📊 Evolution Timeline Visualizer</h4>
+                <p>See how software evolves through iterations:</p>
+                <div style="display: flex; justify-content: space-around; margin: 20px 0; flex-wrap: wrap;">
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #ffeaa7, #fdcb6e); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 10px;">V1.0</div>
+                        <p style="font-size: 0.9em;">Basic Features<br>30% Complete</p>
+                    </div>
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #a8edea, #fed6e3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 10px;">V2.0</div>
+                        <p style="font-size: 0.9em;">User Feedback<br>60% Complete</p>
+                    </div>
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #d4fc79, #96e6a1); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 10px;">V3.0</div>
+                        <p style="font-size: 0.9em;">Refined System<br>90% Complete</p>
+                    </div>
+                    <div style="text-align: center; margin: 10px;">
+                        <div style="width: 80px; height: 80px; background: linear-gradient(135deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; color: white; margin: 0 auto 10px;">V4.0</div>
+                        <p style="font-size: 0.9em;">Mature System<br>100% Complete</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Spiral Model -->
+        <div class="section">
+            <h2>🌀 Spiral Model: Managing Risk Through Cycles</h2>
+            <p>An SDLC model that can be likened to a combination of waterfall model and RAD prototyping with risk analysis. Each cycle involves the same sequence of steps as the waterfall process model. With risk analysis, the software is developed in phases called quadrants.</p>
+
+            <div class="analogy-box">
+                <h4>🎮 Video Game Development Analogy</h4>
+                <p>Think about how video games are developed. Developers create an alpha version (high risk of bugs), then a beta version (medium risk, more features), then release candidates (low risk, almost complete), and finally the full release. At each stage, they assess risks, get player feedback, and decide whether to continue. If risks are too high, they might go back and redesign. This is exactly how the Spiral model works!</p>
+            </div>
+
+            <h3>Strengths and Weaknesses</h3>
+
+            <div class="pros-cons-grid">
+                <div class="pros-box">
+                    <h4>Strengths</h4>
+                    <ul>
+                        <li><strong>The initial design does not have to be perfect:</strong> Users can be closely tied to all lifecycle steps, there is early and frequent feedback from users, and the overall costs assessed frequently.</li>
+                        <li><strong>Flexibility in design:</strong> Changes can be incorporated at any stage.</li>
+                        <li><strong>Risk management:</strong> Continuous risk assessment helps identify and mitigate problems early.</li>
+                        <li><strong>User involvement:</strong> Frequent user feedback ensures the product meets needs.</li>
+                    </ul>
+                </div>
+
+                <div class="cons-box">
+                    <h4>Weaknesses</h4>
+                    <ul>
+                        <li><strong>Time spent for evaluating risks:</strong> It is too large for small or low-risk projects, also the time spent planning, resetting objectives, doing risk analysis and prototyping may be excessive.</li>
+                        <li><strong>Complex model:</strong> Where a risk assessment expertise is required and the spiral may continue indefinitely.</li>
+                        <li><strong>Requires expertise:</strong> Risk analysis requires highly specific expertise.</li>
+                        <li><strong>Can be expensive:</strong> Multiple iterations and extensive risk analysis increase costs.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>🎯 Risk Assessment Tool</h4>
+                <p>Evaluate project risk level to determine if Spiral model is appropriate:</p>
+                <div style="margin: 20px 0;">
+                    <div class="requirement-item">
+                        <label style="flex: 1;">Project Size: <span id="size-value">Medium</span></label>
+                        <input type="range" min="1" max="3" value="2" style="flex: 2;" oninput="updateRisk()" id="project-size">
+                    </div>
+                    <div class="requirement-item">
+                        <label style="flex: 1;">Requirements Clarity: <span id="clarity-value">Moderate</span></label>
+                        <input type="range" min="1" max="3" value="2" style="flex: 2;" oninput="updateRisk()" id="requirements-clarity">
+                    </div>
+                    <div class="requirement-item">
+                        <label style="flex: 1;">Technical Complexity: <span id="complexity-value">Medium</span></label>
+                        <input type="range" min="1" max="3" value="2" style="flex: 2;" oninput="updateRisk()" id="tech-complexity">
+                    </div>
+                </div>
+                <div id="risk-result" style="padding: 20px; background: white; border-radius: 8px; margin-top: 15px; text-align: center;">
+                    <strong>Overall Risk Level:</strong> <span id="risk-level" style="font-size: 1.3em; color: #e67e22;">MEDIUM</span><br>
+                    <span id="risk-recommendation" style="margin-top: 10px; display: block;">Spiral model could be beneficial for this project.</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formal Transformation -->
+        <div class="section">
+            <h2>🔬 Formal Transformation: Mathematical Precision</h2>
+            <p>Formal transformation is a mathematically-based technique for the specification, development and verification of hardware and software systems.</p>
+
+            <p>It is similar to the waterfall model but its specification is converted to a mathematical module. It is a mathematical method used to specify a hardware and/or a software system.</p>
+
+            <p>It is often used to verify whether a specification is realizable or to mathematically prove properties of a system without necessarily running it.</p>
+
+            <div class="analogy-box">
+                <h4>🧮 Math Proof Analogy</h4>
+                <p>Think about proving a mathematical theorem. Instead of just testing examples (like checking if 2+2=4, 3+3=6, etc.), you write a formal proof that works for ALL cases. Formal transformation does the same for software—it mathematically proves the software will work correctly in all scenarios, rather than just testing specific cases. This is incredibly reliable but requires advanced mathematical skills!</p>
+            </div>
+
+            <h3>Phases of Formal Transformation</h3>
+
+            <div class="model-card">
+                <p>It is similar to the waterfall model as each phase has to be finished before moving on to the next. It is used especially when developing systems that require safety, reliability and security.</p>
+                <ol style="line-height: 2; margin-left: 20px;">
+                    <li><strong>Requirements Definition:</strong> The requirements for the system are formally expressed.</li>
+                    <li><strong>Formal Specification:</strong> The software requirements and specifications are combined in this phase and are expressed mathematically.</li>
+                    <li><strong>Formal Transformation:</strong> The design implementation and unit testing are done in this phase, using mathematical notation.</li>
+                    <li><strong>Integration & System Testing:</strong> The system is deployed into the environment and is tested.</li>
+                    <li><strong>Maintenance:</strong> The system is constantly monitored, upgraded and updated.</li>
+                </ol>
+            </div>
+
+            <h3>Strengths and Weaknesses</h3>
+
+            <div class="pros-cons-grid">
+                <div class="pros-box">
+                    <h4>Strengths</h4>
+                    <ul>
+                        <li><strong>The development model is described as precise and free of errors:</strong> Provides mathematical certainty of correctness.</li>
+                        <li><strong>Formal transformation is said to be error-free:</strong> Due to the tedious mathematical specifications which allows no room for errors. It is said that formal transformation ensures that the program or software runs as it is supposed to without any glitches that will affect the running of any vulnerable systems.</li>
+                        <li><strong>High reliability:</strong> Mathematical proofs ensure the system works as specified.</li>
+                        <li><strong>Safety-critical systems:</strong> Ideal for systems where failure could be catastrophic.</li>
+                    </ul>
+                </div>
+
+                <div class="cons-box">
+                    <h4>Weaknesses</h4>
+                    <ul>
+                        <li><strong>Very costly:</strong> It is hard to communicate aspects to customers, it takes very long time to complete due to its need for accuracy. A very limited set of developers are intensively trained in this model and the other must be extensively trained in this model.</li>
+                        <li><strong>Communication difficulties:</strong> Hard to explain mathematical specifications to non-technical stakeholders.</li>
+                        <li><strong>Time-consuming:</strong> Requires extensive time for mathematical proofs and verification.</li>
+                        <li><strong>Limited expertise:</strong> Few developers have the necessary mathematical background.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ When to Use Formal Transformation</h4>
+                <p>This model is best suited for safety-critical systems such as aircraft control systems, medical devices, nuclear power plant controls, or financial transaction systems where errors could have catastrophic consequences. For typical business applications, the cost and complexity usually outweigh the benefits.</p>
+            </div>
+        </div>
+
+        <!-- Fountain Model -->
+        <div class="section">
+            <h2>⛲ Fountain Model: Iterative and Overlapping</h2>
+            <p>As the iterative approach of the model that inspired the name, same as water in a fountain rises and falls back down to the pool below. It was developed to support object-oriented software development. The fountain model allows for the fact that there is considerable overlap of activities throughout the development cycle.</p>
+
+            <div class="analogy-box">
+                <h4>✏️ Essay Revision Analogy</h4>
+                <p>When you write an important essay, you don't finish the introduction, then the body, then the conclusion in strict order. Instead, you might write a rough introduction, start the body, go back to improve the introduction, continue the body, start the conclusion, go back to fix the body, and so on. Everything overlaps and flows back and forth—just like water in a fountain! This is how object-oriented development works too.</p>
+            </div>
+
+            <p>The general movement from the analysis phase through the design phase and to implementation is interwoven with iterative cycles across theses phases during the software development process.</p>
+
+            <h3>Strengths and Weaknesses</h3>
+
+            <div class="pros-cons-grid">
+                <div class="pros-box">
+                    <h4>Strengths</h4>
+                    <ul>
+                        <li><strong>Supports the iterative nature of software development:</strong> Within phases which allows for flexibility. It recognizes that there is an overlap of activities throughout the development cycle. It supports incremental development of system. It leads to focusing on sections of the whole system known as subsystems.</li>
+                        <li><strong>Flexibility:</strong> Allows developers to move between phases as needed.</li>
+                        <li><strong>Object-oriented friendly:</strong> Well-suited for OOP development practices.</li>
+                        <li><strong>Realistic approach:</strong> Reflects how development actually happens in practice.</li>
+                    </ul>
+                </div>
+
+                <div class="cons-box">
+                    <h4>Weaknesses</h4>
+                    <ul>
+                        <li><strong>Limited risk management focus:</strong> There is not much focus on risk management. Some phases cannot begin without others. It slows down the development time of the software system.</li>
+                        <li><strong>Dependencies:</strong> Some phases still depend on others being completed first.</li>
+                        <li><strong>Can be slower:</strong> The iterative nature may extend development time.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="concept-box">
+                <h4>💡 Fountain vs Waterfall</h4>
+                <p>The key difference between Fountain and Waterfall is that Waterfall flows in one direction (top to bottom), while Fountain allows water to flow up and down repeatedly. In development terms, Waterfall requires you to complete each phase before moving to the next, while Fountain lets you move back and forth between phases as needed—much more realistic for complex software development!</p>
+            </div>
+        </div>
+
+
+
+
+        <!-- Reuse-Oriented Approach -->
+        <div class="section">
+            <h2>♻️ Reuse-Oriented Development (ROD): Don't Reinvent the Wheel</h2>
+            <p>The reuse-oriented model, also called reuse-oriented development (ROD). This model gives an approach to system development where preexisting code or components of commercial or open-source (OOS) systems are used.</p>
+
+            <div class="analogy-box">
+                <h4>📋 Template Analogy</h4>
+                <p>Imagine you need to create a presentation for a school project. Instead of designing every slide from scratch, you use a PowerPoint template that already has nice layouts, color schemes, and formatting. You just fill in your content and customize what you need. That's exactly what Reuse-Oriented Development does—it uses existing, tested software components as building blocks rather than coding everything from zero!</p>
+            </div>
+
+            <p>The reuse-oriented model is not always practical in its pure form. The reuse-oriented model can reduce the time associated with software development when compared with more tedious manual methods.</p>
+
+            <p>It can also save time because each phase of the process builds on the previous phase which has already been refined. When carefully carried out, ROD can minimize the likelihood of errors or bugs making their way into the first beta version of a software product.</p>
+
+            <h3>Phases of Reuse-Oriented Development</h3>
+
+            <div style="display: flex; flex-direction: column; gap: 15px; margin: 20px 0;">
+                <div class="model-card">
+                    <h4>1. Requirements Definition</h4>
+                    <p>Initial requirements are gathered and defined.</p>
+                </div>
+                <div style="text-align: center; font-size: 24px; color: #667eea;">↓</div>
+                <div class="model-card">
+                    <h4>2. Component Analysis</h4>
+                    <p>Search for and analyze existing components that could be reused.</p>
+                </div>
+                <div style="text-align: center; font-size: 24px; color: #667eea;">↓</div>
+                <div class="model-card">
+                    <h4>3. Requirements Modification</h4>
+                    <p>Adjust requirements based on available components.</p>
+                </div>
+                <div style="text-align: center; font-size: 24px; color: #667eea;">↓</div>
+                <div class="model-card">
+                    <h4>4. System Design with Reuse</h4>
+                    <p>Design the system incorporating reusable components.</p>
+                </div>
+                <div style="text-align: center; font-size: 24px; color: #667eea;">↓</div>
+                <div class="model-card">
+                    <h4>5. Development & Integration</h4>
+                    <p>Develop new components and integrate with reused ones.</p>
+                </div>
+                <div style="text-align: center; font-size: 24px; color: #667eea;">↓</div>
+                <div class="model-card">
+                    <h4>6. System Validation</h4>
+                    <p>Test and validate the complete integrated system.</p>
+                </div>
+            </div>
+
+            <h3>Strengths and Weaknesses</h3>
+
+            <div class="pros-cons-grid">
+                <div class="pros-box">
+                    <h4>Strengths</h4>
+                    <ul>
+                        <li><strong>Increased reliability:</strong> As components would have already been deployed and tested in a variety of problem domains. Errors would have been discovered earlier and eliminated. Hence reducing the risk of component than in the costs of development. This process has the potential to reduce the amount of development.</li>
+                        <li><strong>Reduced development time:</strong> Building on previous work saves time.</li>
+                        <li><strong>Standards compliance:</strong> Reusable components often follow industry standards.</li>
+                        <li><strong>Lower risk:</strong> Proven components have fewer bugs than new code.</li>
+                        <li><strong>Cost-effective:</strong> Less time and fewer resources needed for development.</li>
+                    </ul>
+                </div>
+
+                <div class="cons-box">
+                    <h4>Weaknesses</h4>
+                    <ul>
+                        <li><strong>Increased maintenance costs:</strong> The inaccessibility of the component source code, will drive maintenance costs. Expensive. Finding and adapting reusable components can be tedious and very time consuming. Hence all engineers would want to be very confident about the compatibility of components.</li>
+                        <li><strong>Source code inaccessibility:</strong> Can't fix bugs in third-party components.</li>
+                        <li><strong>Compatibility issues:</strong> Components may not work well together.</li>
+                        <li><strong>Limited customization:</strong> Reused components may not perfectly fit needs.</li>
+                        <li><strong>Dependency risks:</strong> Relying on external components can be risky if they're discontinued.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>🧩 Component Library Simulator</h4>
+                <p>Select components to build your system:</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin: 20px 0;">
+                    <div class="model-card" style="cursor: pointer;" onclick="toggleComponent(this, 'Authentication')">
+                        <h4>🔐 Authentication Module</h4>
+                        <p style="font-size: 0.9em;">Pre-built, tested<br>Saves: 2 weeks</p>
+                    </div>
+                    <div class="model-card" style="cursor: pointer;" onclick="toggleComponent(this, 'Database')">
+                        <h4>💾 Database Layer</h4>
+                        <p style="font-size: 0.9em;">Industry standard<br>Saves: 3 weeks</p>
+                    </div>
+                    <div class="model-card" style="cursor: pointer;" onclick="toggleComponent(this, 'UI')">
+                        <h4>🎨 UI Framework</h4>
+                        <p style="font-size: 0.9em;">Responsive design<br>Saves: 4 weeks</p>
+                    </div>
+                    <div class="model-card" style="cursor: pointer;" onclick="toggleComponent(this, 'Payment')">
+                        <h4>💳 Payment Gateway</h4>
+                        <p style="font-size: 0.9em;">Secure, compliant<br>Saves: 6 weeks</p>
+                    </div>
+                </div>
+                <div id="component-result" style="padding: 15px; background: white; border-radius: 8px; margin-top: 15px;">
+                    <strong>Time Saved:</strong> <span id="time-saved">0 weeks</span><br>
+                    <strong>Selected Components:</strong> <span id="selected-components">None</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feasibility Study -->
+        <div class="section">
+            <h2>🔍 Feasibility Study: Can We Actually Build This?</h2>
+            <p>The feasibility study is focused towards the goals of the organization. This study analyses whether the project is practically created. The main aim of the feasibility study activity is to determine whether it would be financially and technically feasible to develop the product.</p>
+
+            <div class="analogy-box">
+                <h4>🚗 Car Purchase Analogy</h4>
+                <p>Before buying a car, you ask yourself three questions: (1) Can I afford it? (Economic), (2) Can I actually drive it and maintain it? (Technical), and (3) Will it actually improve my life and meet my needs? (Operational). A feasibility study asks the same three questions about a software project before committing resources to build it!</p>
+            </div>
+
+            <p>The feasibility report is positive towards undertaking the project, next phase starts with gathering requirements from the users. The development team communicates with the stakeholders to know their ideas on what the software should provide and which features are to be included.</p>
+
+            <h3>Types of Feasibility</h3>
+
+            <div class="model-card">
+                <h4>1. Technical Feasibility</h4>
+                <p>This outlines the technical aspects proposed to be used, which will give a technical solution and constraints on the system. This is concerned with specifying equipment and software that will successfully satisfy the user requirement.</p>
+                <p><strong>Questions to Ask:</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Do we have the technical expertise to build this?</li>
+                    <li>Is the technology mature enough and available?</li>
+                    <li>Can our current infrastructure support this system?</li>
+                    <li>Are there technical risks that could prevent success?</li>
+                </ul>
+            </div>
+
+            <div class="model-card">
+                <h4>2. Economic Feasibility</h4>
+                <p>This considers the costs in relation to the benefits of the proposed system. The procedure is to determine the benefits and savings that are expected from a proposed system and compare them with costs. If benefits outweigh costs, a decision is taken to design and implement the system. Further justification or an alternative to the proposed system will have to be made.</p>
+                <p><strong>Questions to Ask:</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>What are the development costs?</li>
+                    <li>What are the expected benefits and savings?</li>
+                    <li>Do benefits exceed costs?</li>
+                    <li>What is the return on investment (ROI)?</li>
+                    <li>Can we afford to build AND maintain this system?</li>
+                </ul>
+            </div>
+
+            <div class="model-card">
+                <h4>3. Operational Feasibility</h4>
+                <p>Operational feasibility determines if the human resources are available to operate the system once it has been installed.</p>
+                <p><strong>Questions to Ask:</strong></p>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li>Do users actually want this new system?</li>
+                    <li>Will users be able to use it effectively?</li>
+                    <li>Does it fit into current business processes?</li>
+                    <li>Will it solve the intended problem?</li>
+                    <li>Are there organizational or cultural barriers?</li>
+                </ul>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>📊 Feasibility Calculator</h4>
+                <p>Evaluate your project's feasibility across all three dimensions:</p>
+                <div style="margin: 20px 0;">
+                    <div class="requirement-item">
+                        <label style="flex: 1;">Technical Feasibility: <span id="tech-feas-value">50%</span></label>
+                        <input type="range" min="0" max="100" value="50" style="flex: 2;" oninput="updateFeasibility()" id="tech-feasibility">
+                    </div>
+                    <div class="requirement-item">
+                        <label style="flex: 1;">Economic Feasibility: <span id="econ-feas-value">50%</span></label>
+                        <input type="range" min="0" max="100" value="50" style="flex: 2;" oninput="updateFeasibility()" id="econ-feasibility">
+                    </div>
+                    <div class="requirement-item">
+                        <label style="flex: 1;">Operational Feasibility: <span id="oper-feas-value">50%</span></label>
+                        <input type="range" min="0" max="100" value="50" style="flex: 2;" oninput="updateFeasibility()" id="oper-feasibility">
+                    </div>
+                </div>
+                <div id="feasibility-result" style="padding: 20px; background: white; border-radius: 8px; margin-top: 15px; text-align: center;">
+                    <strong>Overall Feasibility:</strong> <span id="overall-feasibility" style="font-size: 1.5em; color: #e67e22;">50%</span><br>
+                    <span id="feasibility-recommendation" style="margin-top: 10px; display: block; font-weight: bold;">Borderline - Needs more analysis</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Requirements Gathering and Validation -->
+        <div class="section">
+            <h2>📋 Requirement Gathering: Understanding What Users Really Need</h2>
+            <p>If the feasibility report is positive towards undertaking the project, next phase starts with gathering requirements from the users. The development team communicates with the stakeholders to know their ideas on what the software should provide and which features are to be included.</p>
+
+            <h3>Software Requirement Validation</h3>
+            <p>After requirements are developed, the requirements will be validated. Users might ask for illegal features, or impractical requirement, or experts may find that the requirements can be checked against following conditions:</p>
+
+            <div class="requirements-tool">
+                <h4>✅ Requirements Validation Checklist</h4>
+                <div class="requirement-item">
+                    <input type="checkbox" class="checkbox" id="req1">
+                    <label for="req1"><strong>Practically Implementable:</strong> If they can be practically implemented</label>
+                </div>
+                <div class="requirement-item">
+                    <input type="checkbox" class="checkbox" id="req2">
+                    <label for="req2"><strong>Valid for Functionality:</strong> If they are valid in relation to functionality of software</label>
+                </div>
+                <div class="requirement-item">
+                    <input type="checkbox" class="checkbox" id="req3">
+                    <label for="req3"><strong>No Ambiguities:</strong> If there are any ambiguities</label>
+                </div>
+                <div class="requirement-item">
+                    <input type="checkbox" class="checkbox" id="req4">
+                    <label for="req4"><strong>Complete:</strong> If they are complete</label>
+                </div>
+            </div>
+
+            <h3>Verification vs Validation</h3>
+            
+            <div class="comparison-table">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Aspect</th>
+                            <th>Verification</th>
+                            <th>Validation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Question Asked</strong></td>
+                            <td>"Are we building the product right?"</td>
+                            <td>"Are we building the right product?"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Focus</strong></td>
+                            <td>Process-oriented: Did we follow the specifications correctly?</td>
+                            <td>Product-oriented: Does it meet user needs?</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Definition</strong></td>
+                            <td>Checking that the software conforms to its specification</td>
+                            <td>Checking that the system meets its specific functional and non-functional requirements</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Example</strong></td>
+                            <td>Checking if code follows the design document</td>
+                            <td>Checking if the system solves the user's problem</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="analogy-box">
+                <h4>🎯 Verification vs Validation Analogy</h4>
+                <p><strong>Verification:</strong> You're baking a cake following a recipe. Verification checks if you followed the recipe correctly—did you use the right ingredients in the right amounts?</p>
+                <p><strong>Validation:</strong> Once the cake is baked, validation checks if it actually tastes good and if people want to eat it. You might have followed the recipe perfectly (verification ✓), but if the cake tastes terrible, it fails validation ✗!</p>
+            </div>
+
+            <h3>Importance of Validation</h3>
+            
+            <div class="key-point">
+                <h4>🔑 Why Validation Matters</h4>
+                <p><strong>To correct errors in a requirements document can lead to significant costs when they are eventually discovered during development or deployment.</strong></p>
+                <p>The cost of making a system change resulting from a requirement problem is much greater than repairing design or coding errors.</p>
+                <p>Finding and fixing a requirements error early can save 100x the cost compared to finding it after deployment!</p>
+            </div>
+
+            <h3>Requirements Review</h3>
+            <p>A requirements review is a manual process, which involves multiple readers from both the client and the contracted staff. It involves checking the requirements document for anomalies and omissions in the requirements that are to be implemented by the system.</p>
+
+            <h3>Validation Techniques</h3>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div class="model-card">
+                    <h4>1. Requirements Review</h4>
+                    <p>A team of reviewers analyzes the requirements systematically.</p>
+                    <p><strong>Benefit:</strong> Multiple perspectives catch more errors.</p>
+                </div>
+
+                <div class="model-card">
+                    <h4>2. Prototyping</h4>
+                    <p>An executable model of the system is demonstrated to end-users and customers for them to experiment with and see if it meets their real needs.</p>
+                    <p><strong>Benefit:</strong> Visual demonstration helps users understand what they're getting.</p>
+                </div>
+
+                <div class="model-card">
+                    <h4>3. Test-Case Generation</h4>
+                    <p>If a test is difficult or impossible to design, this usually means the requirements will be difficult to implement and should be reconsidered.</p>
+                    <p><strong>Benefit:</strong> Identifies implementation challenges early.</p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Requirements Elicitation Techniques -->
+        <div class="section">
+            <h2>🎤 Requirements Elicitation Techniques: Gathering the Right Information</h2>
+            <p>The following are tools and techniques used to carry out the feasibility study and requirements analysis in the analysis phase of the SDLC.</p>
+
+            <h3>1. Requirement Elicitation Techniques</h3>
+            <p>Requirement elicitation techniques such as interviews, questionnaires, observations and review of internal documents are used to gather information.</p>
+
+            <div class="model-selector" style="margin: 30px 0;">
+                <button class="model-btn active" onclick="showTechnique('interviews')">Interviews</button>
+                <button class="model-btn" onclick="showTechnique('questionnaires')">Questionnaires</button>
+                <button class="model-btn" onclick="showTechnique('observations')">Observations</button>
+                <button class="model-btn" onclick="showTechnique('documentation')">Documentation Review</button>
+                <button class="model-btn" onclick="showTechnique('prototyping-tech')">Prototyping</button>
+            </div>
+
+            <!-- Interviews -->
+            <div id="interviews" class="model-content active">
+                <div class="model-card">
+                    <h4>👥 Interviews</h4>
+                    <p>An interview is the questioning of a person or having a conversation in which information is elicited. Interviews are a strong medium to collect requirements. Organizations may conduct several types of interviews.</p>
+
+                    <h5 style="margin-top: 20px; color: #5a67d8;">Reasons for Using Interviews</h5>
+                    <p>Interviews are a useful method to:</p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Investigate issues in an in-depth way</li>
+                        <li>Discover how individuals think and feel about a topic and why they hold certain opinions</li>
+                        <li>Inform decision making, strategic planning and resource allocation</li>
+                        <li>Provide ventilation of sensitive topics which people may feel uncomfortable discussing in a focus group</li>
+                        <li>Add a human dimension to impersonal data</li>
+                        <li>Deepen understanding and explain statistical data collected in questionnaires</li>
+                    </ul>
+
+                    <div class="pros-cons-grid" style="margin-top: 20px;">
+                        <div class="pros-box">
+                            <h4>Advantages</h4>
+                            <ul>
+                                <li>They are useful to obtain detailed information about personal feelings, perceptions and opinions</li>
+                                <li>They allow more detailed questions to be asked</li>
+                                <li>They usually achieve a high response rate</li>
+                                <li>Ambiguities can be clarified and incomplete answers followed up</li>
+                            </ul>
+                        </div>
+                        <div class="cons-box">
+                            <h4>Disadvantages</h4>
+                            <ul>
+                                <li>They can be very time-consuming: setting up, interviewing, transcribing, analyzing, feedback, reporting</li>
+                                <li>They can be costly</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questionnaires -->
+            <div id="questionnaires" class="model-content">
+                <div class="model-card">
+                    <h4>📝 Questionnaires</h4>
+                    <p>Questionnaires are an inexpensive way to gather data from a potentially large number of respondents. Often they are the only feasible way to reach a number of reviewers large enough to allow statistical analysis of the results.</p>
+
+                    <h5 style="margin-top: 20px; color: #5a67d8;">Reasons for Using Questionnaires</h5>
+                    <p>Questionnaires are a useful method to investigate:</p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Patterns, frequency, ease and success of use</li>
+                        <li>User needs, expectations, perspectives, priorities and preferences</li>
+                        <li>User satisfaction with collections and services</li>
+                        <li>Shifts in user attitudes and opinions</li>
+                        <li>Relevance of collections and services to user needs</li>
+                    </ul>
+
+                    <div class="pros-cons-grid" style="margin-top: 20px;">
+                        <div class="pros-box">
+                            <h4>Advantages</h4>
+                            <ul>
+                                <li>They are relatively easy to analyse</li>
+                                <li>A large sample of the given population can be contacted at relatively low cost</li>
+                                <li>They are simple to administer</li>
+                                <li>The format is familiar to most respondents</li>
+                                <li>They should be simple and quick for the respondent to complete</li>
+                                <li>Information is collected in a standardized way</li>
+                                <li>Respondents have time to think about their answers; they are not usually required to reply immediately</li>
+                            </ul>
+                        </div>
+                        <div class="cons-box">
+                            <h4>Disadvantages</h4>
+                            <ul>
+                                <li>If you forget to ask a question, you cannot usually go back to respondents, especially if they are anonymous</li>
+                                <li>It is sometimes difficult to obtain a sufficient number of responses, especially from postal questionnaires</li>
+                                <li>Respondents may ignore certain questions</li>
+                                <li>Questionnaires may appear impersonal</li>
+                                <li>Questions may be incorrectly completed</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Observations -->
+            <div id="observations" class="model-content">
+                <div class="model-card">
+                    <h4>👀 Observations</h4>
+                    <p>The observation method of research is basically developed for observing people in their natural setting. It focuses more on their everyday normal life. There are two types of observation methods:</p>
+
+                    <h5 style="margin-top: 20px; color: #5a67d8;">Non-Participant Observation</h5>
+                    <p>The researcher observes without participating in the activities.</p>
+
+                    <h5 style="margin-top: 15px; color: #5a67d8;">Participant Observation</h5>
+                    <p>The researcher actively participates in the activities being observed.</p>
+
+                    <div class="pros-cons-grid" style="margin-top: 20px;">
+                        <div class="pros-box">
+                            <h4>Advantages</h4>
+                            <ul>
+                                <li>It helps in overcoming issues of validity</li>
+                                <li>It is useful when the end-users cannot provide certain information</li>
+                                <li>It is also useful when the subject is feared to have provided inaccurate information</li>
+                                <li>Supplements other data collection methods</li>
+                                <li>Simple</li>
+                            </ul>
+                        </div>
+                        <div class="cons-box">
+                            <h4>Disadvantages</h4>
+                            <ul>
+                                <li>Frequently measuring attitudes or opinions</li>
+                                <li>Time and costs are high</li>
+                                <li>Does not provide complete information for more complex jobs</li>
+                                <li>May interfere with job performance</li>
+                                <li>Validity and reliability may be problematic</li>
+                                <li>May bias worker performance</li>
+                                <li>Small sample size</li>
+                                <li>Requires skilled observer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documentation Review -->
+            <div id="documentation" class="model-content">
+                <div class="model-card">
+                    <h4>📄 Review of Internal Documentation</h4>
+                    <p>Document review is a way of collecting data by reviewing existing documents used inside the organization for the which the system is being developed.</p>
+
+                    <p>The documents may be hard copy or electronic, and may include reports, invoices, regulation sheets, funding proposals, meeting minutes, newsletters, and purchase orders.</p>
+
+                    <h5 style="margin-top: 20px; color: #5a67d8;">Reasons for Using Document Analysis</h5>
+                    <p>Document analysis is a useful method to investigate:</p>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Decision making and strategic planning</li>
+                        <li>Resource allocation</li>
+                        <li>Outcomes alignment and library policy</li>
+                    </ul>
+
+                    <div class="pros-cons-grid" style="margin-top: 20px;">
+                        <div class="pros-box">
+                            <h4>Advantages</h4>
+                            <ul>
+                                <li>It overcomes the difficulties of encouraging participation by users</li>
+                                <li>There are few costs involved other than staff time</li>
+                            </ul>
+                        </div>
+                        <div class="cons-box">
+                            <h4>Disadvantages</h4>
+                            <ul>
+                                <li>It is not suitable to evaluate user opinions, needs or satisfaction with services</li>
+                                <li>Some documents may be sensitive and not accessible</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prototyping Technique -->
+            <div id="prototyping-tech" class="model-content">
+                <div class="model-card">
+                    <h4>🔧 Prototyping</h4>
+                    <p>Software prototyping, an activity during certain software development, is the creation of incomplete versions of the software program being developed.</p>
+
+                    <p>A prototype typically simulates only a few aspects of the features of the eventual program, and may be completely different from the eventual implementation.</p>
+
+                    <p>A prototype allows users of the proposed system to evaluate developers' proposals for the design and functionality of the eventual software artifact. Prototyping can also be used by end users to describe and prove requirements that developers have not considered.</p>
+
+                    <p>Prototyping has several benefits: the software designer and implementer obtains early feedback from the specification provided to developers. Clients and contractors can compare the software to, to ensure that it is according to which the software program is built.</p>
+
+                    <div class="key-point" style="margin-top: 20px;">
+                        <h4>Benefits of Prototyping</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Reduced time and costs:</strong> Prototyping can improve the quality of requirements and the end specification provided to developers.</li>
+                            <li><strong>Improved and increased user involvement:</strong> Prototyping requires user involvement and allows them to see and interact with a prototype allowing them to provide better and more complete feedback and specifications.</li>
+                            <li><strong>Specific feedback on system functionality:</strong> Prototyping allows the designer and implementer to obtain early feedback on the design, allowing them to see and interact with a prototype, allowing them to provide more complete and accurate requirements.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 40px;">2. Additional Requirements Analysis Tools</h3>
+            <p>The following are additional tools and techniques used to carry out requirements analysis:</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 20px 0;">
+                <div class="model-card">
+                    <h4>3. Data Flow Diagram (DFD)</h4>
+                    <p>DFD is used to document the flow of information, to show the storage of data through a particular system.</p>
+                    <p><strong>Purpose:</strong> Visualizes how data moves through the system from input to storage to output.</p>
+                </div>
+
+                <div class="model-card">
+                    <h4>4. Data Dictionary</h4>
+                    <p>Data Dictionary provides the name, type, size and description of all the relevant data used in the software system.</p>
+                    <p><strong>Purpose:</strong> Centralized repository of information about data elements.</p>
+                </div>
+
+                <div class="model-card">
+                    <h4>5. Semantic Data Model</h4>
+                    <p>A semantic data model in software engineering is a data modeling technique for the context of its interrelationships with other data. A semantic data model is an abstraction which defines how the stored symbols relate to the real world. A semantic data model is sometimes called a conceptual data model.</p>
+                    <p><strong>Purpose:</strong> Represents the meaning of data and relationships in a way that's closer to how humans think.</p>
+                </div>
+
+                <div class="model-card">
+                    <h4>6. Object Models</h4>
+                    <p>Object Models are used to store specific information/data about entities in a software system.</p>
+                    <p><strong>Purpose:</strong> Represents real-world entities as objects with properties and behaviors.</p>
+                </div>
+
+                <div class="model-card">
+                    <h4>7. Computer Aided Software Engineering (CASE)</h4>
+                    <p>Computer Aided Software Engineering (CASE) tools are used to analyse the present data and model a software system.</p>
+                    <p><strong>Purpose:</strong> Automated tools that support various software engineering activities including requirements analysis.</p>
+                </div>
+            </div>
+
+            <h3>Functional vs Non-Functional Requirements</h3>
+
+            <div class="comparison-table">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Functional Requirements</th>
+                            <th>Non-Functional Requirements (Constraints)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Describes the interaction between the system and its environment</td>
+                            <td>Put restrictions on the system - describes a restriction on the system that limits our choices for constructing a solution to the problem</td>
+                        </tr>
+                        <tr>
+                            <td>Describes how the system should behave, given certain inputs</td>
+                            <td>These constraints limit the selection of the programming language, platform, or implementation techniques or tools</td>
+                        </tr>
+                        <tr>
+                            <td>Provides answers to questions that are independent of an implementation of a solution to the application's problem</td>
+                            <td>Put restrictions on the system</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Example:</strong> "The system shall allow users to log in with username and password"</td>
+                            <td><strong>Example:</strong> "The system must respond within 2 seconds" or "The system must use Python 3.11"</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="analogy-box">
+                <h4>🎮 Gaming Console Analogy</h4>
+                <p><strong>Functional Requirements:</strong> What the console DOES - plays games, connects online, saves progress, supports multiplayer.</p>
+                <p><strong>Non-Functional Requirements:</strong> HOW WELL it does it - loads games in under 10 seconds, supports 4K resolution, runs quietly, uses less than 200W power, costs under $500.</p>
+            </div>
+
+            <h3>Issues in Requirement Elicitation</h3>
+
+            <div class="warning-box">
+                <h4>⚠️ Common Challenges</h4>
+                <ul style="margin-left: 20px; line-height: 1.8;">
+                    <li><strong>Ambiguous understanding of business processes:</strong> Stakeholders may not clearly understand or explain their own processes.</li>
+                    <li><strong>Conflicting stakeholder interests:</strong> Different users want different things.</li>
+                    <li><strong>Inconsistency within a single process:</strong> The same task might be done by multiple users in different ways.</li>
+                    <li><strong>Insufficient or incomplete input from stakeholders:</strong> Users don't provide enough detail.</li>
+                    <li><strong>Changes in system requirements after project has started:</strong> Requirements evolve during development.</li>
+                </ul>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>🎯 Requirements Elicitation Technique Matcher</h4>
+                <p>Select a scenario to see which elicitation technique works best:</p>
+                <select id="scenario-selector" style="width: 100%; padding: 12px; border-radius: 8px; border: 2px solid #e2e8f0; font-size: 1em; margin: 15px 0;" onchange="showRecommendation()">
+                    <option value="">-- Select a Scenario --</option>
+                    <option value="large-user-base">Need input from 500+ users across multiple departments</option>
+                    <option value="complex-workflow">Understanding a complex workflow with many exceptions</option>
+                    <option value="unclear-needs">Users can't articulate what they need</option>
+                    <option value="existing-system">Replacing an existing manual system</option>
+                    <option value="sensitive-info">Gathering information about sensitive topics</option>
+                    <option value="ui-critical">User interface is critical to success</option>
+                </select>
+                <div id="technique-recommendation" style="padding: 20px; background: white; border-radius: 8px; margin-top: 15px; display: none;">
+                    <h4 style="color: #5a67d8; margin-bottom: 10px;">Recommended Technique:</h4>
+                    <p id="recommendation-text"></p>
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <!-- Glossary -->
+        <div class="section">
+            <h2>📖 Glossary: Key Terms and Concepts</h2>
+            <p>Master these essential terms to excel in software development life cycle methodologies:</p>
+
+            <div class="glossary-grid">
+                <div class="glossary-term">
+                    <strong>SDLC (Software Development Life Cycle)</strong>
+                    <p>A structured process for planning, creating, testing, and deploying software systems.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Waterfall Model</strong>
+                    <p>A sequential SDLC model where each phase must be completed before the next begins, flowing downward like a waterfall.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Deliverable</strong>
+                    <p>The end product or output of a phase in the SDLC that flows into the next phase.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Verification</strong>
+                    <p>Checking that the software conforms to its specification. Asks: "Are we building the product right?"</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Validation</strong>
+                    <p>Checking that the system meets user needs and requirements. Asks: "Are we building the right product?"</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Prototype</strong>
+                    <p>An incomplete version of software created to demonstrate features and gather user feedback before full development.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Iteration</strong>
+                    <p>A cycle of development where software is repeatedly refined and improved based on feedback.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Incremental Development</strong>
+                    <p>Building software in small, functional pieces that are delivered and integrated one at a time.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Spiral Model</strong>
+                    <p>An SDLC model that combines iterative development with risk analysis, progressing through repeated cycles (quadrants).</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Quadrant</strong>
+                    <p>A phase or cycle in the Spiral model where development and risk analysis occur.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Feasibility Study</strong>
+                    <p>Analysis to determine if a project is technically, economically, and operationally viable before committing resources.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Requirements Elicitation</strong>
+                    <p>The process of gathering requirements from stakeholders through interviews, questionnaires, observations, and other techniques.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Functional Requirements</strong>
+                    <p>Specifications describing what the system should do—its features, capabilities, and behaviors.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Non-Functional Requirements</strong>
+                    <p>Constraints on how the system operates, such as performance, security, usability, and platform requirements.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>DFD (Data Flow Diagram)</strong>
+                    <p>A visual representation showing how data moves through a system from input to storage to output.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Data Dictionary</strong>
+                    <p>A centralized repository containing names, types, sizes, and descriptions of all data elements in a system.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Semantic Data Model</strong>
+                    <p>An abstraction that defines how stored data relates to the real world and its meaning in context.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>CASE (Computer Aided Software Engineering)</strong>
+                    <p>Automated tools that support software engineering activities including analysis, design, and development.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>ROD (Reuse-Oriented Development)</strong>
+                    <p>A development approach that uses preexisting code or components rather than building everything from scratch.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Formal Transformation</strong>
+                    <p>A mathematically-based technique for specifying, developing, and verifying systems with mathematical precision.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Fountain Model</strong>
+                    <p>An iterative SDLC model where development activities overlap and cycle back and forth, like water in a fountain.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Evolutionary Development</strong>
+                    <p>A development approach where the system evolves through multiple iterations based on continuous user feedback.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Rapid Prototyping</strong>
+                    <p>Quick creation of working models with limited functionality to gather user feedback before full implementation.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Agile Model</strong>
+                    <p>An iterative approach where working software is built and delivered after each short development cycle (sprint).</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Technical Feasibility</strong>
+                    <p>Assessment of whether the required technology and expertise are available to build the system.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Economic Feasibility</strong>
+                    <p>Analysis comparing project costs against expected benefits to determine financial viability.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Operational Feasibility</strong>
+                    <p>Evaluation of whether users will accept and be able to effectively use the proposed system.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Requirements Review</strong>
+                    <p>A manual process where multiple reviewers check requirements documents for errors and omissions.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Stakeholder</strong>
+                    <p>Anyone who has an interest in or is affected by the software system—users, clients, developers, managers.</p>
+                </div>
+
+                <div class="glossary-term">
+                    <strong>Object Model</strong>
+                    <p>A representation of real-world entities as objects with properties, behaviors, and relationships.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comprehensive Quiz -->
+        <div class="section">
+            <h2>🎓 Comprehensive Quiz: Test Your Knowledge</h2>
+            <p>Challenge yourself with these 30 questions covering all SDLC models, requirements engineering, and software development concepts. This quiz includes case studies that require critical thinking!</p>
+
+            <div class="quiz-container">
+                <!-- Question 1 -->
+                <div class="quiz-question">
+                    <h4>Question 1: Waterfall Model Characteristics</h4>
+                    <p>Which of the following is NOT a characteristic of the Waterfall model?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="a">
+                            A) Sequential phases that must be completed in order
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="b">
+                            B) Each phase produces a deliverable for the next phase
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q1" value="c">
+                            C) Frequent iterations and continuous user feedback
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="d">
+                            D) Well-defined stages and activities
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2 -->
+                <div class="quiz-question">
+                    <h4>Question 2: Verification vs Validation</h4>
+                    <p>What is the key difference between verification and validation?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="a">
+                            A) Verification checks if we're building the right product; validation checks if we're building the product right
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q2" value="b">
+                            B) Verification checks if we're building the product right; validation checks if we're building the right product
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="c">
+                            C) They are the same thing with different names
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="d">
+                            D) Verification is done by users; validation is done by developers
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 3: Case Study - Model Selection</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A hospital wants to develop a new patient management system to replace their existing paper-based system. The requirements are well-understood because they're simply automating their current manual processes. The system must be highly reliable and secure. Budget is limited, and the hospital wants a predictable timeline with clear milestones.</p>
+                    </div>
+                    <p>Which SDLC model would be MOST appropriate for this project?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="a">
+                            A) Agile Model - for flexibility and frequent iterations
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q3" value="b">
+                            B) Waterfall Model - requirements are clear, need predictability and structure
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="c">
+                            C) Spiral Model - for high-risk medical software
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="d">
+                            D) Evolutionary Development - to gather user feedback continuously
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4 -->
+                <div class="quiz-question">
+                    <h4>Question 4: Rapid Prototyping</h4>
+                    <p>What is the main purpose of creating a prototype in software development?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="a">
+                            A) To create the final production system quickly
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q4" value="b">
+                            B) To allow users to evaluate and provide feedback before full implementation
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="c">
+                            C) To replace the requirements analysis phase
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="d">
+                            D) To reduce the need for testing
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5 -->
+                <div class="quiz-question">
+                    <h4>Question 5: Waterfall Limitations</h4>
+                    <p>The Waterfall model is NOT suitable for which type of project?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q5" value="a">
+                            A) Replacing an existing manual system with well-known requirements
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q5" value="b">
+                            B) Small projects with clear, stable requirements
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q5" value="c">
+                            C) Innovative new systems with unclear or evolving requirements
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q5" value="d">
+                            D) Projects in regulated industries with strict documentation needs
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 6 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 6: Case Study - Risk Management</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A startup is developing a revolutionary AI-powered social media app. The technology is cutting-edge and unproven. User requirements are unclear because nothing like this exists yet. The project has high uncertainty and technical risks. Investors want to see progress regularly.</p>
+                    </div>
+                    <p>Which model would be BEST suited for this project?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q6" value="a">
+                            A) Waterfall Model - for structured development
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q6" value="b">
+                            B) Formal Transformation - for mathematical precision
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q6" value="c">
+                            C) Spiral Model - for risk analysis and iterative development
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q6" value="d">
+                            D) Reuse-Oriented Development - to save time
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 7 -->
+                <div class="quiz-question">
+                    <h4>Question 7: Feasibility Study Components</h4>
+                    <p>Which type of feasibility determines if users will accept and be able to use the proposed system?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q7" value="a">
+                            A) Technical Feasibility
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q7" value="b">
+                            B) Economic Feasibility
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q7" value="c">
+                            C) Operational Feasibility
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q7" value="d">
+                            D) Schedule Feasibility
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 8 -->
+                <div class="quiz-question">
+                    <h4>Question 8: Spiral Model Characteristics</h4>
+                    <p>What makes the Spiral model unique compared to other SDLC models?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q8" value="a">
+                            A) It eliminates the need for testing
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q8" value="b">
+                            B) It combines iterative development with systematic risk analysis in each cycle
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q8" value="c">
+                            C) It requires no documentation
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q8" value="d">
+                            D) It is faster than all other models
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 9 -->
+                <div class="quiz-question">
+                    <h4>Question 9: Requirements Elicitation - Interviews</h4>
+                    <p>What is a key ADVANTAGE of using interviews for requirements gathering?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q9" value="a">
+                            A) They are the fastest method available
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q9" value="b">
+                            B) They allow for in-depth understanding and the ability to follow up on ambiguous answers
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q9" value="c">
+                            C) They reach the largest number of stakeholders
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q9" value="d">
+                            D) They require no preparation or planning
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 10 -->
+                <div class="quiz-question">
+                    <h4>Question 10: Requirements Elicitation - Questionnaires</h4>
+                    <p>When would questionnaires be the MOST appropriate requirements gathering technique?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q10" value="a">
+                            A) When you need detailed, in-depth information from a few key stakeholders
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q10" value="b">
+                            B) When you need standardized, easy-to-analyze data from a large number of geographically dispersed users
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q10" value="c">
+                            C) When requirements are completely unclear and need exploration
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q10" value="d">
+                            D) When you have unlimited time and budget
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 11 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 11: Case Study - Requirements Gathering</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A large international corporation with 50,000 employees across 30 countries wants to gather requirements for a new internal communication platform. They need input from employees at all levels and locations, but the budget for requirements gathering is limited.</p>
+                    </div>
+                    <p>Which requirements elicitation technique would be MOST cost-effective and practical?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q11" value="a">
+                            A) Conduct in-person interviews with all 50,000 employees
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q11" value="b">
+                            B) Distribute online questionnaires to gather standardized feedback from all locations
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q11" value="c">
+                            C) Observe each employee's current communication patterns
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q11" value="d">
+                            D) Build a prototype and wait for feedback
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 12 -->
+                <div class="quiz-question">
+                    <h4>Question 12: Evolutionary Development</h4>
+                    <p>What is the primary characteristic of Evolutionary Development?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q12" value="a">
+                            A) All requirements must be specified before development begins
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q12" value="b">
+                            B) The system evolves through multiple iterations based on user feedback
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q12" value="c">
+                            C) No testing is required during development
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q12" value="d">
+                            D) Documentation is created only at the end
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 13 -->
+                <div class="quiz-question">
+                    <h4>Question 13: Data Flow Diagram (DFD)</h4>
+                    <p>What is the primary purpose of a Data Flow Diagram in requirements analysis?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q13" value="a">
+                            A) To show how data moves through the system and is transformed by processes
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q13" value="b">
+                            B) To show the physical hardware architecture
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q13" value="c">
+                            C) To display the user interface design
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q13" value="d">
+                            D) To calculate project costs
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 14 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 14: Case Study - Validation Failure</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> An e-commerce company built a new checkout system. The development team verified that all code met the technical specifications perfectly. However, when launched, customers complained that the checkout process was too complicated and confusing, leading to abandoned shopping carts and lost sales.</p>
+                    </div>
+                    <p>What went wrong in this scenario?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q14" value="a">
+                            A) Verification failed - the code had bugs
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q14" value="b">
+                            B) Validation failed - they built the product right but not the right product
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q14" value="c">
+                            C) The Waterfall model was used incorrectly
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q14" value="d">
+                            D) Technical feasibility was not assessed properly
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 15 -->
+                <div class="quiz-question">
+                    <h4>Question 15: Functional vs Non-Functional Requirements</h4>
+                    <p>Which of the following is a NON-FUNCTIONAL requirement?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q15" value="a">
+                            A) The system shall allow users to create an account
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q15" value="b">
+                            B) The system shall process payment transactions
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q15" value="c">
+                            C) The system shall respond to user queries within 2 seconds
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q15" value="d">
+                            D) The system shall generate monthly reports
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 16 -->
+                <div class="quiz-question">
+                    <h4>Question 16: Reuse-Oriented Development (ROD)</h4>
+                    <p>What is the main benefit of Reuse-Oriented Development?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q16" value="a">
+                            A) Reduced development time and cost by leveraging existing components
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q16" value="b">
+                            B) Complete customization for every project
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q16" value="c">
+                            C) No need for requirements analysis
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q16" value="d">
+                            D) Elimination of all testing phases
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 17 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 17: Case Study - Requirements Error Cost</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A software company discovered a major requirements error during the testing phase (after coding was complete). Fixing this error required redesigning several modules, rewriting thousands of lines of code, and repeating all testing. The fix cost $500,000 and delayed the project by 3 months.</p>
+                    </div>
+                    <p>How could this costly error have been prevented?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q17" value="a">
+                            A) Better verification and validation at the requirements phase before proceeding to design
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q17" value="b">
+                            B) Skipping the requirements phase entirely
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q17" value="c">
+                            C) Using cheaper developers
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q17" value="d">
+                            D) Eliminating the testing phase
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 18 -->
+                <div class="quiz-question">
+                    <h4>Question 18: Observation as Requirements Gathering</h4>
+                    <p>What is a key DISADVANTAGE of using observation for requirements gathering?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q18" value="a">
+                            A) It provides no useful information
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q18" value="b">
+                            B) It is time-consuming and may not reveal why users perform certain actions
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q18" value="c">
+                            C) It is the most expensive method available
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q18" value="d">
+                            D) It cannot be used for software projects
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 19 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 19: Case Study - Reuse-Oriented Development</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A software company is building a mobile app. They have three options: (1) Build everything from scratch, (2) Use existing UI frameworks and authentication libraries, or (3) Use a complete app template and customize it.</p>
+                    </div>
+                    <p>Which approach represents Reuse-Oriented Development?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q19" value="a">
+                            A) Option 1 only
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q19" value="b">
+                            B) Options 2 and 3
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q19" value="c">
+                            C) Option 3 only
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q19" value="d">
+                            D) None of the options
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 20 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 20: Case Study - Comprehensive Model Selection</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A government agency needs software to control traffic lights at major intersections. The system must be extremely reliable (failure could cause accidents), requirements are well-understood from existing manual systems, and the agency wants thorough documentation at each phase. However, the technology is proven and low-risk.</p>
+                    </div>
+                    <p>Considering all factors, which model would be BEST?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q20" value="a">
+                            A) Waterfall - clear requirements, need for documentation, but consider Formal Transformation for safety-critical aspects
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q20" value="b">
+                            B) Agile - for flexibility and quick iterations
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q20" value="c">
+                            C) Spiral - because all software has high risk
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q20" value="d">
+                            D) Evolutionary - to gather continuous feedback
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 21 -->
+                <div class="quiz-question">
+                    <h4>Question 21: Formal Transformation Model</h4>
+                    <p>What distinguishes the Formal Transformation model from other SDLC approaches?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q21" value="a">
+                            A) It uses mathematical specifications that are transformed into executable code
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q21" value="b">
+                            B) It requires no testing because code is generated automatically
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q21" value="c">
+                            C) It is the fastest development method available
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q21" value="d">
+                            D) It eliminates the need for requirements gathering
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 22 -->
+                <div class="quiz-question">
+                    <h4>Question 22: Fountain Model</h4>
+                    <p>How does the Fountain model differ from the Waterfall model?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q22" value="a">
+                            A) Fountain model is strictly sequential like Waterfall
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q22" value="b">
+                            B) Fountain model allows overlapping phases and iteration, unlike Waterfall's strict sequence
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q22" value="c">
+                            C) Fountain model requires no documentation
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q22" value="d">
+                            D) They are identical models with different names
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 23 -->
+                <div class="quiz-question">
+                    <h4>Question 23: CASE Tools</h4>
+                    <p>What is the primary purpose of CASE (Computer-Aided Software Engineering) tools?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q23" value="a">
+                            A) To automate and support various software development activities like modeling and documentation
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q23" value="b">
+                            B) To replace all human developers
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q23" value="c">
+                            C) To eliminate the need for testing
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q23" value="d">
+                            D) To manage project budgets only
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 24 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 24: Case Study - Technical Feasibility</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A small startup wants to build a quantum computing application. However, they have no quantum computing experts on staff, no access to quantum computers, and the technology is still experimental. The project would require skills and resources they don't currently possess.</p>
+                    </div>
+                    <p>What type of feasibility concern does this represent?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q24" value="a">
+                            A) Technical Feasibility - they lack the technical capability to build the system
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q24" value="b">
+                            B) Economic Feasibility - it's about money
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q24" value="c">
+                            C) Operational Feasibility - users won't accept it
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q24" value="d">
+                            D) No feasibility concerns exist
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 25 -->
+                <div class="quiz-question">
+                    <h4>Question 25: Economic Feasibility</h4>
+                    <p>What does economic feasibility primarily assess?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q25" value="a">
+                            A) Whether the technology exists to build the system
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q25" value="b">
+                            B) Whether the benefits of the system justify the development and operational costs
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q25" value="c">
+                            C) Whether users will accept the new system
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q25" value="d">
+                            D) Whether the project can be completed on time
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 26 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 26: Case Study - Documentation Review</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A company is replacing their 20-year-old inventory management system. The old system has extensive documentation including user manuals, process flowcharts, and business rules. The new system should replicate most of the old functionality with modern technology.</p>
+                    </div>
+                    <p>Which requirements elicitation technique would be MOST valuable as a starting point?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q26" value="a">
+                            A) Questionnaires sent to all users
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q26" value="b">
+                            B) Review of internal documentation to understand existing processes
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q26" value="c">
+                            C) Building a prototype without any research
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q26" value="d">
+                            D) Observation of competitors
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 27 -->
+                <div class="quiz-question">
+                    <h4>Question 27: Data Dictionary</h4>
+                    <p>What information does a Data Dictionary typically contain?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q27" value="a">
+                            A) Definitions of all data elements, their types, formats, and relationships
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q27" value="b">
+                            B) Only the names of database tables
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q27" value="c">
+                            C) User interface mockups
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q27" value="d">
+                            D) Project budget information
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 28 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 28: Case Study - Prototyping Benefits</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A design agency is building a website for a client who has difficulty articulating exactly what they want. The client says "I'll know it when I see it." Previous attempts to gather requirements through interviews have been frustrating and unproductive.</p>
+                    </div>
+                    <p>What approach would be MOST effective?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q28" value="a">
+                            A) Use the Waterfall model and force the client to specify all requirements upfront
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q28" value="b">
+                            B) Create quick prototypes to help the client visualize options and provide concrete feedback
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q28" value="c">
+                            C) Build the complete system based on assumptions
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q28" value="d">
+                            D) Refuse to work with the client
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 29 -->
+                <div class="quiz-question">
+                    <h4>Question 29: Requirements Review</h4>
+                    <p>Why is requirements review critical before moving to the design phase?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q29" value="a">
+                            A) To catch errors, ambiguities, and conflicts early when they're cheapest to fix
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q29" value="b">
+                            B) It's not important and can be skipped
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q29" value="c">
+                            C) To delay the project and increase costs
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q29" value="d">
+                            D) To eliminate the need for testing later
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 30 - Case Study -->
+                <div class="quiz-question case-study">
+                    <h4>Question 30: Case Study - Comprehensive SDLC Selection</h4>
+                    <div class="case-study-scenario">
+                        <p><strong>Scenario:</strong> A video game company is developing a new multiplayer online game. The gaming industry is highly competitive and trends change rapidly. Players expect frequent updates with new features. The company wants to release a basic version quickly and then add features based on player feedback. Requirements will evolve as they learn what players enjoy.</p>
+                    </div>
+                    <p>Which SDLC model is MOST appropriate for this project?</p>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q30" value="a">
+                            A) Waterfall - for structured, predictable development
+                        </label>
+                        <label class="quiz-option correct-answer">
+                            <input type="radio" name="q30" value="b">
+                            B) Evolutionary Development - release early, gather feedback, and continuously improve
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q30" value="c">
+                            C) Formal Transformation - for mathematical precision
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q30" value="d">
+                            D) Traditional Waterfall with no changes allowed
+                        </label>
+                    </div>
+                </div>
+
+                <button class="submit-btn" onclick="gradeQuiz()">Submit Quiz</button>
+                
+                <div id="quiz-results" style="display: none; margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; text-align: center;">
+                    <h3 style="font-size: 2em; margin-bottom: 15px;">🎉 Quiz Complete!</h3>
+                    <p id="score-display" style="font-size: 1.5em; margin-bottom: 10px;"></p>
+                    <p id="feedback-message" style="font-size: 1.1em;"></p>
+                </div>
+            </div>
+        </div>
+
+                <div id="quiz-results" style="display: none; margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 15px; text-align: center;">
+                    <h3 style="margin-bottom: 15px;">Quiz Results</h3>
+                    <p style="font-size: 2em; font-weight: bold; margin: 20px 0;" id="score-display"></p>
+                    <p id="performance-message" style="font-size: 1.2em; margin: 15px 0;"></p>
+                    <button class="submit-btn" onclick="location.reload()" style="background: white; color: #667eea; margin-top: 20px;">Retake Quiz</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="section" style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2>🎉 Congratulations!</h2>
+            <p style="font-size: 1.1em; line-height: 1.8;">You've completed the comprehensive guide to Software Development Life Cycle Models! You now understand Waterfall, Rapid Prototyping, Evolutionary Development, Spiral, Formal Transformation, Fountain, and Reuse-Oriented approaches, along with requirements engineering techniques.</p>
+            <p style="margin-top: 20px; font-size: 1em;">Keep practicing and applying these concepts to become an excellent software developer!</p>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        // Model selector functionality
+        function showModel(modelId) {
+            // Hide all model contents
+            const contents = document.querySelectorAll('.model-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // Remove active class from all buttons
+            const buttons = document.querySelectorAll('.model-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // Show selected model
+            document.getElementById(modelId).classList.add('active');
+            
+            // Highlight active button
+            event.target.classList.add('active');
+        }
+
+        // Phase toggle functionality
+        function togglePhase(phaseId) {
+            const phase = document.getElementById(phaseId);
+            phase.classList.toggle('active');
+        }
+
+        // Prototype simulator
+        let selectedFeatures = [];
+        function updatePrototype() {
+            selectedFeatures = [];
+            const checkboxes = ['proto1', 'proto2', 'proto3'];
+            const features = ['Dark mode interface', 'Simplified navigation', 'Mobile-first design'];
+            
+            checkboxes.forEach((id, index) => {
+                if (document.getElementById(id).checked) {
+                    selectedFeatures.push(features[index]);
+                }
+            });
+            
+            const statusElement = document.getElementById('proto-status');
+            if (selectedFeatures.length === 0) {
+                statusElement.textContent = 'No features selected - basic prototype';
+                statusElement.style.color = '#e67e22';
+            } else {
+                statusElement.textContent = `Prototype updated with: ${selectedFeatures.join(', ')}. Ready for user feedback!`;
+                statusElement.style.color = '#38a169';
+            }
+        }
+
+        // Risk assessment tool
+        function updateRisk() {
+            const sizeMap = ['Small', 'Medium', 'Large'];
+            const clarityMap = ['Clear', 'Moderate', 'Unclear'];
+            const complexityMap = ['Low', 'Medium', 'High'];
+            
+            const size = parseInt(document.getElementById('project-size').value);
+            const clarity = parseInt(document.getElementById('requirements-clarity').value);
+            const complexity = parseInt(document.getElementById('tech-complexity').value);
+            
+            document.getElementById('size-value').textContent = sizeMap[size - 1];
+            document.getElementById('clarity-value').textContent = clarityMap[clarity - 1];
+            document.getElementById('complexity-value').textContent = complexityMap[complexity - 1];
+            
+            const riskScore = size + (4 - clarity) + complexity;
+            const riskLevel = document.getElementById('risk-level');
+            const recommendation = document.getElementById('risk-recommendation');
+            
+            if (riskScore <= 4) {
+                riskLevel.textContent = 'LOW';
+                riskLevel.style.color = '#38a169';
+                recommendation.textContent = 'Waterfall or Incremental model would work well. Spiral model may be overkill.';
+            } else if (riskScore <= 7) {
+                riskLevel.textContent = 'MEDIUM';
+                riskLevel.style.color = '#e67e22';
+                recommendation.textContent = 'Spiral model could be beneficial. Consider iterative approaches with risk analysis.';
+            } else {
+                riskLevel.textContent = 'HIGH';
+                riskLevel.style.color = '#e53e3e';
+                recommendation.textContent = 'Spiral model strongly recommended! High risk requires systematic risk analysis in each cycle.';
+            }
+        }
+
+        // Component library simulator
+        let totalTimeSaved = 0;
+        let selectedComponents = [];
+        
+        function toggleComponent(element, componentName) {
+            const timeMap = {
+                'Authentication': 2,
+                'Database': 3,
+                'UI': 4,
+                'Payment': 6
+            };
+            
+            if (element.style.background === 'rgb(200, 247, 197)') {
+                // Deselect
+                element.style.background = '';
+                totalTimeSaved -= timeMap[componentName];
+                selectedComponents = selectedComponents.filter(c => c !== componentName);
+            } else {
+                // Select
+                element.style.background = '#c8f7c5';
+                totalTimeSaved += timeMap[componentName];
+                selectedComponents.push(componentName);
+            }
+            
+            document.getElementById('time-saved').textContent = totalTimeSaved + ' weeks';
+            document.getElementById('selected-components').textContent = 
+                selectedComponents.length > 0 ? selectedComponents.join(', ') : 'None';
+        }
+
+        // Feasibility calculator
+        function updateFeasibility() {
+            const tech = parseInt(document.getElementById('tech-feasibility').value);
+            const econ = parseInt(document.getElementById('econ-feasibility').value);
+            const oper = parseInt(document.getElementById('oper-feasibility').value);
+            
+            document.getElementById('tech-feas-value').textContent = tech + '%';
+            document.getElementById('econ-feas-value').textContent = econ + '%';
+            document.getElementById('oper-feas-value').textContent = oper + '%';
+            
+            const overall = Math.round((tech + econ + oper) / 3);
+            const overallElement = document.getElementById('overall-feasibility');
+            const recommendation = document.getElementById('feasibility-recommendation');
+            
+            overallElement.textContent = overall + '%';
+            
+            if (overall >= 75) {
+                overallElement.style.color = '#38a169';
+                recommendation.textContent = 'Highly Feasible - Proceed with project!';
+                recommendation.style.color = '#38a169';
+            } else if (overall >= 50) {
+                overallElement.style.color = '#e67e22';
+                recommendation.textContent = 'Borderline - Needs more analysis and risk mitigation';
+                recommendation.style.color = '#e67e22';
+            } else {
+                overallElement.style.color = '#e53e3e';
+                recommendation.textContent = 'Not Feasible - Consider alternatives or major changes';
+                recommendation.style.color = '#e53e3e';
+            }
+        }
+
+        // Requirements elicitation technique selector
+        function showTechnique(techniqueId) {
+            const contents = document.querySelectorAll('.model-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            const buttons = document.querySelectorAll('.model-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(techniqueId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Technique recommendation
+        function showRecommendation() {
+            const scenario = document.getElementById('scenario-selector').value;
+            const recommendationDiv = document.getElementById('technique-recommendation');
+            const recommendationText = document.getElementById('recommendation-text');
+            
+            if (!scenario) {
+                recommendationDiv.style.display = 'none';
+                return;
+            }
+            
+            recommendationDiv.style.display = 'block';
+            
+            const recommendations = {
+                'large-user-base': '<strong>Questionnaires</strong><br>With 500+ users, questionnaires are the most cost-effective way to gather data from a large population. They can be distributed electronically, are simple to administer, and provide standardized data that\'s easy to analyze.',
+                
+                'complex-workflow': '<strong>Interviews + Observations</strong><br>For complex workflows, you need in-depth understanding. Interviews allow you to ask detailed questions and follow up on ambiguities. Observations let you see how the process actually works in practice, which may differ from how users describe it.',
+                
+                'unclear-needs': '<strong>Prototyping</strong><br>When users can\'t articulate their needs, show them something concrete! A prototype allows users to see and interact with a working model, making it easier for them to provide specific feedback about what they want.',
+                
+                'existing-system': '<strong>Review of Internal Documentation + Observations</strong><br>Existing documents (forms, reports, procedures) provide valuable information about current processes. Combine this with observations to see how the manual system actually operates.',
+                
+                'sensitive-info': '<strong>Interviews (one-on-one)</strong><br>For sensitive topics, individual interviews provide a safe, confidential environment where people feel comfortable sharing information they might not discuss in groups or written questionnaires.',
+                
+                'ui-critical': '<strong>Prototyping</strong><br>When UI is critical, users need to see and interact with it. Prototyping allows them to evaluate the interface design and provide feedback before full development, ensuring the final product meets their needs.'
+            };
+            
+            recommendationText.innerHTML = recommendations[scenario];
+        }
+
+        // Quiz grading
+        function gradeQuiz() {
+            const answers = {
+                q1: 'c', q2: 'b', q3: 'b', q4: 'b', q5: 'c',
+                q6: 'c', q7: 'c', q8: 'b', q9: 'b', q10: 'b',
+                q11: 'c', q12: 'b', q13: 'b', q14: 'b', q15: 'b',
+                q16: 'b', q17: 'b', q18: 'b', q19: 'b', q20: 'a'
+            };
+            
+            let score = 0;
+            let totalQuestions = Object.keys(answers).length;
+            
+            // Grade each question
+            for (let question in answers) {
+                const selected = document.querySelector(`input[name="${question}"]:checked`);
+                const options = document.querySelectorAll(`input[name="${question}"]`);
+                
+                // Reset all options
+                options.forEach(option => {
+                    option.parentElement.classList.remove('correct', 'incorrect', 'selected');
+                });
+                
+                if (selected) {
+                    if (selected.value === answers[question]) {
+                        score++;
+                        selected.parentElement.classList.add('correct');
+                    } else {
+                        selected.parentElement.classList.add('incorrect');
+                        // Show correct answer
+                        options.forEach(option => {
+                            if (option.value === answers[question]) {
+                                option.parentElement.classList.add('correct');
+                            }
+                        });
+                    }
+                }
+            }
+            
+            // Calculate percentage
+            const percentage = Math.round((score / totalQuestions) * 100);
+            
+            // Display results
+            document.getElementById('score-display').textContent = `${score} / ${totalQuestions} (${percentage}%)`;
+            
+            const performanceMessage = document.getElementById('performance-message');
+            if (percentage >= 90) {
+                performanceMessage.textContent = '🌟 Outstanding! You have mastered SDLC models and requirements engineering!';
+            } else if (percentage >= 80) {
+                performanceMessage.textContent = '🎉 Excellent work! You have a strong understanding of the concepts!';
+            } else if (percentage >= 70) {
+                performanceMessage.textContent = '👍 Good job! Review the topics you missed to strengthen your knowledge.';
+            } else if (percentage >= 60) {
+                performanceMessage.textContent = '📚 Fair performance. Review the material and try again to improve your score.';
+            } else {
+                performanceMessage.textContent = '📖 Keep studying! Review all sections carefully and retake the quiz.';
+            }
+            
+            document.getElementById('quiz-results').style.display = 'block';
+            document.getElementById('quiz-results').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Initialize on page load
+        window.addEventListener('load', function() {
+            console.log('Waterfall Methodology Interactive Page Loaded Successfully!');
+        });
+    </script>
+</body>
+</html>
+
